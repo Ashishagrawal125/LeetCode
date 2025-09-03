@@ -1,20 +1,38 @@
-// Last updated: 9/3/2025, 11:38:34 AM
+// Last updated: 9/3/2025, 12:38:31 PM
 class Solution {
-    public int rob(int[] nums) {
-        int[] dp = new int[nums.length];
-        Arrays.fill(dp, -1);
-        return Robber(nums, 0, dp);
+
+    public int lengthOfLIS(int[] nums) {
+
+        return (LTS(nums));
+
+        
+
     }
 
-    public static int Robber(int[] nums, int i, int[] dp) {
-        if (i >= nums.length) {
-            return 0;
+    public static int LTS(int[] arr){
+
+        int [] dp = new int[arr.length];
+
+        Arrays.fill(dp,1);
+
+        for(int i = 1;i<dp.length;i++){
+
+            for(int j = i-1;j>=0;j--){
+
+                if(arr[i]>arr[j]){
+
+                    int x=dp[j];
+
+                    dp[i] = Math.max(dp[i],x+1);
+
+                }
+
+            }
+
         }
-        if (dp[i] != -1) {
-            return dp[i];
-        }
-        int rob = nums[i] + Robber(nums, i + 2, dp);
-        int dontRob = Robber(nums, i + 1, dp);
-        return dp[i] = Math.max(rob, dontRob);
+
+        return Arrays.stream(dp).max().getAsInt();
+
     }
+
 }
