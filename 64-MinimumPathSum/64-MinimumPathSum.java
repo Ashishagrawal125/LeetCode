@@ -1,21 +1,34 @@
-// Last updated: 9/10/2025, 11:46:31 AM
-public class Solution {
-    public int minPathSum(int[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
-        int[][] dp = new int[m][n];
-        dp[0][0] = grid[0][0];
-        for (int j = 1; j < n; j++) {
-            dp[0][j] = dp[0][j-1] + grid[0][j];
+// Last updated: 9/10/2025, 12:25:54 PM
+class Solution {
+    public int minFallingPathSum(int[][] matrix) {
+        int ans = Integer.MAX_VALUE;
+        int[][] dp = new int[matrix.length][matrix[0].length];
+        for(int[] a:dp){
+            Arrays.fill(a,-66666);
         }
-        for (int i = 1; i < m; i++) {
-            dp[i][0] = dp[i-1][0] + grid[i][0];
+
+        for(int col =0;col<matrix[0].length; col++){
+            ans = Math.min(ans,Minimum_falling_path(matrix,0,col,dp));
+
         }
-        for (int i = 1; i < m; i++) {
-            for (int j = 1; j < n; j++) {
-                dp[i][j] = Math.min(dp[i-1][j], dp[i][j-1]) + grid[i][j];
-            }
+        return ans;
+        
+    }
+    public static int Minimum_falling_path(int[][] matrix,int cr,int cc,int[][] dp){
+        if(cc <0 || cc>= matrix[0].length){
+            return Integer.MAX_VALUE;
         }
-        return dp[m-1][n-1];
+        if(cr == matrix.length -1){
+            return matrix[cr][cc];
+        }
+        if(dp[cr][cc] != -66666){
+            return dp[cr][cc];
+        }
+
+        int ld = Minimum_falling_path(matrix,cr+1,cc-1,dp);
+        int rd = Minimum_falling_path(matrix,cr+1,cc+1,dp);
+        int d = Minimum_falling_path(matrix,cr+1,cc,dp);
+        return dp[cr][cc] = Math.min(rd,Math.min(ld,d)) +matrix[cr][cc];
+
     }
 }
