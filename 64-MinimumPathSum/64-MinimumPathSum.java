@@ -1,4 +1,4 @@
-// Last updated: 9/10/2025, 12:25:54 PM
+// Last updated: 9/10/2025, 12:37:44 PM
 class Solution {
     public int minFallingPathSum(int[][] matrix) {
         int ans = Integer.MAX_VALUE;
@@ -24,11 +24,16 @@ class Solution {
         if(dp[cr][cc] != -66666){
             return dp[cr][cc];
         }
+        int ans = Integer.MAX_VALUE;
+        for(int i =0;i<matrix[0].length;i++){
+            if(i == cc){
+                continue;
+            }
+            ans = Math.min(ans,Minimum_falling_path(matrix,cr+1,i,dp));
 
-        int ld = Minimum_falling_path(matrix,cr+1,cc-1,dp);
-        int rd = Minimum_falling_path(matrix,cr+1,cc+1,dp);
-        int d = Minimum_falling_path(matrix,cr+1,cc,dp);
-        return dp[cr][cc] = Math.min(rd,Math.min(ld,d)) +matrix[cr][cc];
+        }
+
+        return dp[cr][cc] = ans +matrix[cr][cc];
 
     }
 }
