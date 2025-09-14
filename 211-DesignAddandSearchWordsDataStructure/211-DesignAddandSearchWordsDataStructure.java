@@ -1,42 +1,36 @@
-// Last updated: 9/14/2025, 9:57:40 PM
-class WordDictionary {
-    private static class Node {
-        Node[] children = new Node[26];
-        boolean isWord = false;
+// Last updated: 9/14/2025, 9:58:18 PM
+import java.util.*;
+
+class Solution {
+    public List<Integer> diffWaysToCompute(String expression) {
+        return helper(expression, new HashMap<>());
     }
     
-    private final Node root = new Node();
-    
-    // Adds a word into the data structure.
-    public void addWord(String word) {
-        Node cur = root;
-        for (char c : word.toCharArray()) {
-            int idx = c - 'a';
-            if (cur.children[idx] == null) cur.children[idx] = new Node();
-            cur = cur.children[idx];
-        }
-        cur.isWord = true;
-    }
-    
-    // Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter.
-    public boolean search(String word) {
-        return searchFrom(root, word, 0);
-    }
-    
-    private boolean searchFrom(Node node, String word, int pos) {
-        if (node == null) return false;
-        if (pos == word.length()) return node.isWord;
+    private List<Integer> helper(String expr, Map<String, List<Integer>> memo) {
+        if (memo.containsKey(expr)) return memo.get(expr);
         
-        char c = word.charAt(pos);
-        if (c == '.') {
-            // try all possible children
-            for (Node child : node.children) {
-                if (child != null && searchFrom(child, word, pos + 1)) return true;
+        List<Integer> res = new ArrayList<>();
+        for (int i = 0; i < expr.length(); i++) {
+            char c = expr.charAt(i);
+            if (c == '+' || c == '-' || c == '*') {
+                List<Integer> left = helper(expr.substring(0, i), memo);
+                List<Integer> right = helper(expr.substring(i + 1), memo);
+                
+                for (int a : left) {
+                    for (int b : right) {
+                        if (c == '+') res.add(a + b);
+                        else if (c == '-') res.add(a - b);
+                        else res.add(a * b);
+                    }
+                }
             }
-            return false;
-        } else {
-            int idx = c - 'a';
-            return searchFrom(node.children[idx], word, pos + 1);
         }
+        
+        if (res.isEmpty()) {
+            res.add(Integer.valueOf(expr)); // base case: expr is a number
+        }
+        
+        memo.put(expr, res);
+        return res;
     }
 }
