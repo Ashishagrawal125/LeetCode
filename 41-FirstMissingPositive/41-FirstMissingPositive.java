@@ -1,12 +1,29 @@
-// Last updated: 9/19/2025, 10:40:43 PM
+// Last updated: 9/19/2025, 10:43:15 PM
 class Solution {
-    public int maxProfit(int[] prices) {
-        int profit = 0;
-        for (int i = 1; i < prices.length; i++) {
-            if (prices[i] > prices[i - 1]) {
-                profit += prices[i] - prices[i - 1];
+    public List<Integer> majorityElement(int[] nums) {
+        int n1 = 0, n2 = 0, c1 = 0, c2 = 0;
+        for (int num : nums) {
+            if (num == n1) c1++;
+            else if (num == n2) c2++;
+            else if (c1 == 0) {
+                n1 = num;
+                c1 = 1;
+            } else if (c2 == 0) {
+                n2 = num;
+                c2 = 1;
+            } else {
+                c1--;
+                c2--;
             }
         }
-        return profit;
+        List<Integer> res = new ArrayList<>();
+        c1 = c2 = 0;
+        for (int num : nums) {
+            if (num == n1) c1++;
+            else if (num == n2) c2++;
+        }
+        if (c1 > nums.length / 3) res.add(n1);
+        if (c2 > nums.length / 3) res.add(n2);
+        return res;
     }
 }
