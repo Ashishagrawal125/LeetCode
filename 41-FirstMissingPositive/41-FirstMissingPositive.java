@@ -1,17 +1,18 @@
-// Last updated: 9/19/2025, 10:39:05 PM
+// Last updated: 9/19/2025, 10:39:57 PM
 class Solution {
-    public int firstMissingPositive(int[] nums) {
-        int n = nums.length;
-        for (int i = 0; i < n; i++) {
-            while (nums[i] > 0 && nums[i] <= n && nums[nums[i] - 1] != nums[i]) {
-                int temp = nums[i];
-                nums[i] = nums[temp - 1];
-                nums[temp - 1] = temp;
-            }
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        List<int[]> res = new ArrayList<>();
+        int i = 0, n = intervals.length;
+        while (i < n && intervals[i][1] < newInterval[0]) {
+            res.add(intervals[i++]);
         }
-        for (int i = 0; i < n; i++) {
-            if (nums[i] != i + 1) return i + 1;
+        while (i < n && intervals[i][0] <= newInterval[1]) {
+            newInterval[0] = Math.min(newInterval[0], intervals[i][0]);
+            newInterval[1] = Math.max(newInterval[1], intervals[i][1]);
+            i++;
         }
-        return n + 1;
+        res.add(newInterval);
+        while (i < n) res.add(intervals[i++]);
+        return res.toArray(new int[res.size()][]);
     }
 }
