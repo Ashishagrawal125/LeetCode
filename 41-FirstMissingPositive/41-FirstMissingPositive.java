@@ -1,18 +1,12 @@
-// Last updated: 9/19/2025, 10:39:57 PM
+// Last updated: 9/19/2025, 10:40:43 PM
 class Solution {
-    public int[][] insert(int[][] intervals, int[] newInterval) {
-        List<int[]> res = new ArrayList<>();
-        int i = 0, n = intervals.length;
-        while (i < n && intervals[i][1] < newInterval[0]) {
-            res.add(intervals[i++]);
+    public int maxProfit(int[] prices) {
+        int profit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] > prices[i - 1]) {
+                profit += prices[i] - prices[i - 1];
+            }
         }
-        while (i < n && intervals[i][0] <= newInterval[1]) {
-            newInterval[0] = Math.min(newInterval[0], intervals[i][0]);
-            newInterval[1] = Math.max(newInterval[1], intervals[i][1]);
-            i++;
-        }
-        res.add(newInterval);
-        while (i < n) res.add(intervals[i++]);
-        return res.toArray(new int[res.size()][]);
+        return profit;
     }
 }
