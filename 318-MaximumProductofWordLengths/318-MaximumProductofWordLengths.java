@@ -1,0 +1,27 @@
+// Last updated: 11/15/2025, 11:43:23 PM
+class Solution {
+    public int maxProduct(String[] words) {
+        int n = words.length;
+        int[] mask = new int[n];
+        int[] len = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            int m = 0;
+            for (char c : words[i].toCharArray()) {
+                m |= 1 << (c - 'a');
+            }
+            mask[i] = m;
+            len[i] = words[i].length();
+        }
+
+        int max = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if ((mask[i] & mask[j]) == 0) {
+                    max = Math.max(max, len[i] * len[j]);
+                }
+            }
+        }
+        return max;
+    }
+}
