@@ -1,10 +1,10 @@
-// Last updated: 8/27/2025, 12:53:41 PM
-class Solution {
-    public int singleNumber(int[] nums) {
-        int result = 0;
-        for (int number : nums) {
-            result = result ^ number;
-        }
-        return result;
-    }
-}
+// Last updated: 11/27/2025, 12:06:23 PM
+1class Solution {
+2    public int singleNumber(int[] nums) {
+3        int xor = 0;
+4        for(int i =0; i < nums.length; i++){
+5            xor = xor ^ nums[i];
+6        }
+7        return (xor);
+8    }
+9}
