@@ -1,4 +1,4 @@
-// Last updated: 12/31/2025, 1:55:59 PM
+// Last updated: 1/1/2026, 11:17:14 PM
 1class Solution {
 2    public int latestDayToCross(int row, int col, int[][] cells) {
 3        DSU dsu = new DSU(row * col + 2);
