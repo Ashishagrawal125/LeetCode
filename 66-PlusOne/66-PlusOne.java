@@ -1,16 +1,15 @@
-// Last updated: 8/27/2025, 12:54:21 PM
-class Solution {
-    public int[] plusOne(int[] digits) {
-        int n = digits.length;
-        for (int i = n - 1; i >= 0; i--) {
-            if (digits[i] < 9) {
-                digits[i]++;
-                return digits;
-            }
-            digits[i] = 0;
-        }
-        int[] newArray = new int[n + 1];
-        newArray[0] = 1;
-        return newArray;
-    }
-}
+// Last updated: 1/1/2026, 11:18:00 PM
+1class Solution {
+2    public int[] plusOne(int[] digits) {
+3        for(int i = digits.length - 1; i >= 0; i--) {
+4            if(digits[i] != 9) {
+5                digits[i] += 1;
+6                return digits;
+7            }
+8            digits[i] = 0;
+9        }   
+10        digits = new int[digits.length + 1];
+11        digits[0] = 1;
+12        return digits;
+13    }
+14}
